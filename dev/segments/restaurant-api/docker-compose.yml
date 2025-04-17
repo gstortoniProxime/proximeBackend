@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  restaurant-api:
+    build: .
+    container_name: restaurant-api
+    ports:
+      - "3002:3002"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - restaurant-mongo
+
+  restaurant-mongo:
+    image: mongo:6
+    container_name: restaurant-mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - restaurant_mongo_data:/data/db
+
+volumes:
+  restaurant_mongo_data:
