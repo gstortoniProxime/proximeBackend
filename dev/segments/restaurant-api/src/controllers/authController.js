@@ -17,3 +17,13 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.createUser = async (req, res) => {
+  try {
+    const newUser = new AuthUser(req.body);
+    await newUser.save();
+    res.status(201).json(newUser);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};

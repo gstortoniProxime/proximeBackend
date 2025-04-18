@@ -25,7 +25,7 @@ try {
   const userRoutes = require('./routes/restaurantUserRoutes');
   app.use('/api/restaurant-users', userRoutes);
   
-  const authenticate = require('./middlewares/authenticate');
+  const authenticate = require('./middleware/authenticate');
 
 
   console.log('[✅] Routes mounted at /api/restaurants');

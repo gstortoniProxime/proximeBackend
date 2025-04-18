@@ -2,13 +2,15 @@ version: '3.8'
 
 services:
   restaurant-api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: restaurant-api
     ports:
       - "3002:3002"
-    volumes:
-      - .:/app
-      - /app/node_modules
+    #volumes:
+     # - ./dev/segments/restaurant-api:/app
+      # - /app/node_modules  # Descomentalo solo si sabés que lo necesitás
     env_file:
       - .env
     depends_on:
