@@ -11,8 +11,8 @@ const mongoURI = process.env.MONGO_URI;
 
 app.use(cors());
 app.use(express.json());
-const businessRoutes = require('./routes/businessRoutes');
-app.use('/api/businesses', businessRoutes);
+//const businessRoutes = require('./routes/businessRoutes');
+//app.use('/api/businesses', businessRoutes);
 
 const authRoutes = require('./routes/authRoutes');
 app.use('/api', authRoutes);
