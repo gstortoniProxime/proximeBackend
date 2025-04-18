@@ -1,25 +1,27 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers.authorization;
+  console.log('Authorization Header:', authHeader);
+  console.log('CORE_API_SECRET:', process.env.CORE_API_SECRET);
 
-  if (!authHeader || !authHeader.startsWith('Bearer '))
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'No token provided' });
+  }
 
   const token = authHeader.split(' ')[1];
-
   try {
-    // Usás la misma clave que usa proxime-core-api para firmar los tokens
-    const decoded = jwt.verify(token, process.env.CORE_API_SECRET);
+    const payload = jwt.verify(token, process.env.CORE_API_SECRET);
+    console.log('Token Payload:', payload);
 
-    // Si querés asegurar que solo usuarios superadmin puedan hacer esto:
-    if (decoded.role !== 'superadmin') {
-      return res.status(403).json({ error: 'Not authorized as superadmin' });
+    if (!payload || payload.type !== 'core') {
+      return res.status(403).json({ error: 'Invalid token type' });
     }
 
-    req.auth = decoded; // Para que el controller lo use si quiere
+    req.coreApp = payload;
     next();
   } catch (err) {
-    return res.status(403).json({ error: 'Invalid token' });
+    console.error('Token verification error:', err);
+    return res.status(401).json({ error: 'Token invalid or expired' });
   }
 };
