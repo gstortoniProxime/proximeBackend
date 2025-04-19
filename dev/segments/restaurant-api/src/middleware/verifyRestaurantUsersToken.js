@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     const payload = jwt.verify(token, process.env.RESTAURANT_API_SECRET);
 
     // Este token no representa un usuario, sino una app autorizada
-    if (!payload || payload.type !== 'core') {
+    if (!payload) {
       return res.status(403).json({ error: 'Invalid token type' });
     }
 

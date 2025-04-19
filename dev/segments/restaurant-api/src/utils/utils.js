@@ -14,7 +14,9 @@ function validateBusinessAccess(resourceBusinessId, tokenBusinessId) {
    * Verifica si el usuario tiene el rol permitido
    */
   function validateRole(req, allowedRoles = []) {
-    if (!allowedRoles.includes(req.auth?.role)) {
+
+    console.log('GS - Auth' + req.role);
+    if (!allowedRoles.includes(req?.role)) {
       const err = new Error('No autorizado para esta acción');
       err.status = 403;
       throw err;

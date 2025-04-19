@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/authController.js');
-//const verifyCoreToken = require('../middleware/verifyCoreToken');
-const verifyCoreToken = require('../middleware/verifyAdminCoreToken');
+const verifyRestaurantUserToken = require('../middleware/verifyRestaurantUsersToken');
+const verifyAdminCoreToken = require('../middleware/verifyAdminCoreToken');
 
 const AuthUser = require('../models/AuthUser');
-router.post('/', verifyCoreToken, controller.createUser);
+router.post('/', verifyAdminCoreToken, controller.createUser);
 router.post('/login', controller.login);
-router.patch('/', verifyCoreToken, controller.updateUser);
+router.patch('/', verifyRestaurantUserToken, controller.updateUser);
+router.get('/', verifyRestaurantUserToken, controller.getUsers);
 
 // 🧪 Ruta temporal sin token para bootstrap
 /* router.post('/setup', async (req, res) => {
