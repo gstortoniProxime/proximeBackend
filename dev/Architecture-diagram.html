@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Proxime Architecture Diagram</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .block {
+      background-color: #fff;
+      border: 2px solid #333;
+      border-radius: 8px;
+      padding: 12px 20px;
+      margin: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-width: 280px;
+      text-align: center;
+    }
+    .arrow {
+      font-size: 24px;
+      margin: -6px 0;
+    }
+    .group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .sub-block {
+      background-color: #e9e9e9;
+      border: 1px solid #999;
+      border-radius: 6px;
+      margin: 8px;
+      padding: 10px;
+      min-width: 220px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Proxime Architecture Diagram</h1>
+  <div class="diagram">
+    <div class="block">Proxime Platform Core</div>
+
+    <div class="arrow">↓</div>
+    <div class="block">Business (Segment-agnostic)</div>
+
+    <div class="arrow">↓</div>
+    <div class="group">
+      <div class="sub-block">
+        <strong>Branch</strong><br>
+        - Location<br>
+        - Timezone<br>
+        - Language
+      </div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="group">
+      <div class="sub-block">
+        <strong>Zones & Subzones</strong><br>
+        - Hierarchical structure<br>
+        - Active/Inactive<br>
+        - Cleaning/Maintenance status
+      </div>
+      <div class="sub-block">
+        <strong>Tables</strong><br>
+        - Status: available / occupied / reserved / blocked<br>
+        - Beacon or QR<br>
+        - Seats, Metadata
+      </div>
+      <div class="sub-block">
+        <strong>Temporary Zone Groups</strong><br>
+        - Event-based grouping of tables<br>
+        - Works as a single unit<br>
+        - Auto-dissolve after event
+      </div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="group">
+      <div class="sub-block">
+        <strong>Shifts</strong><br>
+        - Morning / Afternoon / Night<br>
+        - Days of the week
+      </div>
+      <div class="sub-block">
+        <strong>Zone-Shift Assignments</strong><br>
+        - Staff per zone & shift<br>
+        - Fallback/escalation enabled<br>
+        - Live presence tracking on login
+      </div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="block">
+      Módulos Activables (Attention Request, Reservations, Delivery...)
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="group">
+      <div class="sub-block">
+        <strong>Module Registry</strong><br>
+        - Activation by business<br>
+        - Config per module (beacon/QR/escalation...)
+      </div>
+      <div class="sub-block">
+        <strong>Access Middleware</strong><br>
+        - Token-based<br>
+        - Business ID & Role validated<br>
+        - Permissions per module
+      </div>
+    </div>
+  </div>
+</body>
+</html>

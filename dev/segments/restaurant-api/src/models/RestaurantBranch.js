@@ -1,15 +1,25 @@
 const mongoose = require('mongoose');
 
-const restaurantBranchSchema = new mongoose.Schema({
+const branchSchema = new mongoose.Schema({
   businessId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'RestaurantBusiness',
     required: true
   },
-  name: { type: String, required: true },
-  description: { type: String },
-  phone: { type: String },
-  email: { type: String },
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  code: {
+    type: String,
+    unique: true,
+    sparse: true,
+    uppercase: true
+  },
+  description: {
+    type: String
+  },
   location: {
     type: {
       type: String,
@@ -17,21 +27,72 @@ const restaurantBranchSchema = new mongoose.Schema({
       default: 'Point'
     },
     coordinates: {
-      type: [Number],
-      required: true // [longitude, latitude]
+      type: [Number], // [lng, lat]
+      required: true
+    },
+    address: {
+      street: String,
+      number: String,
+      city: String,
+      state: String,
+      zipCode: String,
+      country: String
     }
   },
-  address: { type: String },
-  city: { type: String },
-  state: { type: String },
-  zipCode: { type: String },
-  country: { type: String },
-  timezone: { type: String },
-  isActive: { type: Boolean, default: true }
+  contact: {
+    phone: String,
+    email: String,
+    whatsapp: String,
+    contactPerson: String
+  },
+  timezone: {
+    type: String,
+    default: 'America/New_York'
+  },
+  language: {
+    type: String,
+    default: 'en'
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  openingHours: [
+    {
+      day: {
+        type: String,
+        enum: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+      },
+      open: String, // "09:00"
+      close: String // "18:00"
+    }
+  ],
+  config: {
+    acceptsReservations: {
+      type: Boolean,
+      default: false
+    },
+    acceptsDelivery: {
+      type: Boolean,
+      default: false
+    },
+    acceptsWalkIn: {
+      type: Boolean,
+      default: true
+    },
+    acceptsPickup: {
+      type: Boolean,
+      default: false
+    }
+  },
+  metadata: {
+    tags: [String],
+    notes: String
+  }
 }, {
   timestamps: true
 });
 
-restaurantBranchSchema.index({ location: '2dsphere' });
+branchSchema.index({ location: '2dsphere' });
 
-module.exports = mongoose.model('RestaurantBranch', restaurantBranchSchema);
+module.exports = mongoose.model('Branch', branchSchema);
