@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/authController.js');
-const verifyCoreToken = require('../middleware/verifyCoreToken');
-
+//const verifyCoreToken = require('../middleware/verifyCoreToken');
+const verifyCoreToken = require('../middleware/verifyAdminCoreToken');
 
 const AuthUser = require('../models/AuthUser');
 router.post('/', verifyCoreToken, controller.createUser);
 router.post('/login', controller.login);
-
+router.patch('/', verifyCoreToken, controller.updateUser);
 
 // 🧪 Ruta temporal sin token para bootstrap
-router.post('/setup', async (req, res) => {
+/* router.post('/setup', async (req, res) => {
     try {
       const { email, password, name, businessId } = req.body;
   
@@ -31,7 +31,7 @@ router.post('/setup', async (req, res) => {
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  });
+  }); */
   
 
 module.exports = router;

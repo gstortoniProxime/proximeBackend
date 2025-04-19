@@ -26,7 +26,17 @@ const authUserSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true,
-  }
+  },
+  name: {
+    type: String,
+    trim: true,
+  },
+  branches: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Branch'
+    }
+  ]
 }, {
   timestamps: true
 });
