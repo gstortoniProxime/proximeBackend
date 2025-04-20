@@ -70,7 +70,7 @@ const branchSchema = new mongoose.Schema({
     }
   ],
   enabledModules: {
-    type: [String], // Ej: ['reservations', 'delivery', 'attention']
+    type: [mongoose.Schema.Types.ObjectId], // Ej: ['reservations', 'delivery', 'attention']
     default: []
   },
   metadata: {

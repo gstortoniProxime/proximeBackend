@@ -25,6 +25,8 @@ try {
   const userRoutes = require('./routes/restaurantUserRoutes');
   app.use('/api/restaurant-users', userRoutes);
   
+  const setupSwagger = require('./src/config/swagger'); // Ajustá el path si cambia
+  setupSwagger(app);
   //const authenticate = require('./middleware/authenticate-a-borrar');
 
 
