@@ -1,3 +1,5 @@
+const RestaurantBusiness = require('../models/RestaurantBusiness');
+
 function validateBusinessAccess(resourceBusinessId, tokenBusinessId) {
 
     console.log("resourceBusinessId:", resourceBusinessId + "tokenBusinessId:", tokenBusinessId);
@@ -22,7 +24,8 @@ function validateBusinessAccess(resourceBusinessId, tokenBusinessId) {
       throw err;
     }
   }
-  
+
+    
   module.exports = {
     validateBusinessAccess,
     validateRole

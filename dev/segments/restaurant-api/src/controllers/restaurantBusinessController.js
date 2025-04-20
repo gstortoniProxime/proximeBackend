@@ -36,7 +36,8 @@ exports.getBusinesses = async (req, res) => {
     try {
 
       const businessId = req?.auth?.businessId || req.params.id; // fallback si estás pasando el ID en la ruta      
-      const businesses = await RestaurantBusiness.find({ _id: req.authUser.businessId });
+      //retorna todos los negocios del usuario autenticado
+      const businesses = await RestaurantBusiness.find({ _id: req.authUser.businessId }); 
       res.json({
         businessId: businessId,
         businesses: businesses

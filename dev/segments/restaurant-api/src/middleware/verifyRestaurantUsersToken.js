@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
       return res.status(403).json({ error: 'Invalid token type' });
     }
 
-    req.coreApp = payload;
+    req.authUser = payload;
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Token invalid or expired' });

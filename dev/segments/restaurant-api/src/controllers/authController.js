@@ -45,7 +45,7 @@ exports.updateUser = async (req, res) => {
   try {
 
     //Validar que el usuario tenga el rol de admin
-    utils.validateRole(req.coreApp, 'admin');
+    utils.validateRole(req.authUser, 'admin');
     
     const { email } = req.body;
 
@@ -61,7 +61,7 @@ exports.updateUser = async (req, res) => {
 
     // Validar que el usuario sea del mismo negocio.
 
-    utils.validateBusinessAccess(user.businessId,req.coreApp);
+    utils.validateBusinessAccess(user.businessId,req.authUser);
 
    
     // Lista blanca de campos actualizables
@@ -86,7 +86,7 @@ exports.getUsers = async (req, res) => {
 
   try {
     //const getUsers = AuthUser.find(req.coreApp.businessId);
-    const users = await AuthUser.find({ businessId: req.coreApp.businessId }).select('-password');
+    const users = await AuthUser.find({ businessId: req.authUser.businessId }).select('-password');
     // Removemos el password del payload
     const { password: _, ...safePayload } = users;
 

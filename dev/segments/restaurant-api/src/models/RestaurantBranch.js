@@ -31,12 +31,13 @@ const branchSchema = new mongoose.Schema({
       required: true
     },
     address: {
-      street: String,
-      number: String,
-      city: String,
-      state: String,
-      zipCode: String,
-      country: String
+      street: { type: String, required: true },
+      number: { type: String, required: true },
+      city: { type: String, required: true },
+      state: { type: String, required: false }, 
+      region: { type: String, required: false }, 
+      zipCode: { type: String, required: false }, 
+      country: { type: String, required: true }
     }
   },
   contact: {
@@ -59,31 +60,18 @@ const branchSchema = new mongoose.Schema({
   },
   openingHours: [
     {
+      _id: false, 
       day: {
         type: String,
         enum: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
       },
-      open: String, // "09:00"
-      close: String // "18:00"
+      open: String,
+      close: String
     }
   ],
-  config: {
-    acceptsReservations: {
-      type: Boolean,
-      default: false
-    },
-    acceptsDelivery: {
-      type: Boolean,
-      default: false
-    },
-    acceptsWalkIn: {
-      type: Boolean,
-      default: true
-    },
-    acceptsPickup: {
-      type: Boolean,
-      default: false
-    }
+  enabledModules: {
+    type: [String], // Ej: ['reservations', 'delivery', 'attention']
+    default: []
   },
   metadata: {
     tags: [String],
@@ -95,4 +83,4 @@ const branchSchema = new mongoose.Schema({
 
 branchSchema.index({ location: '2dsphere' });
 
-module.exports = mongoose.model('Branch', branchSchema);
+module.exports = mongoose.model('restaurantBranch', branchSchema);
