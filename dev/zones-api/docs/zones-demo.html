@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zones Demo - Proxime</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f8f9fa; }
+    h1 { color: #343a40; }
+    .zone { padding: 12px 20px; border: 2px solid #198754; border-radius: 8px; margin-bottom: 10px; background: white; position: relative; animation: fadeIn 1s ease-in-out; }
+    .child { margin-left: 40px; border-color: #0d6efd; }
+    .template { padding: 8px 14px; border: 1px dashed #6c757d; margin: 20px 0; }
+    .highlight { background: #d1e7dd; animation: highlight 1s ease-in-out; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes highlight {
+      0% { background: #e9fbe5; }
+      50% { background: #b6ecc6; }
+      100% { background: #d1e7dd; }
+    }
+  </style>
+</head>
+<body>
+  <h1>📍 Zones Creation Simulation</h1>
+  <p>This is a visual walkthrough of how <strong>zones</strong> and <strong>sub-zones</strong> are created using a template and added to a new branch.</p>
+
+  <div class="template">
+    ✅ Loading template: <strong>Olive Garden Default</strong><br>
+    ▶️ Structure: Dining Area → Table 1 → Seat A, Seat B
+  </div>
+
+  <div id="output"></div>
+
+  <script>
+    const output = document.getElementById("output");
+
+    function createZone(name, delay, isChild = false) {
+      setTimeout(() => {
+        const zone = document.createElement("div");
+        zone.className = "zone" + (isChild ? " child" : "");
+        zone.textContent = `➕ Created zone: ${name}`;
+        output.appendChild(zone);
+      }, delay);
+    }
+
+    // Simulate creation steps
+    let delay = 500;
+    createZone("Dining Area", delay); delay += 1000;
+    createZone("Table 1", delay, true); delay += 1000;
+    createZone("Seat A", delay, true); delay += 1000;
+    createZone("Seat B", delay, true);
+  </script>
+</body>
+</html>

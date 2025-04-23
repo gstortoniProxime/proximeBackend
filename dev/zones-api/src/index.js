@@ -15,9 +15,11 @@ app.use(authenticate); // Protege todas las rutas por defecto
 const zoneTemplateRoutes = require('./routes/zoneTemplate.routes');
 app.use('/zone-templates', zoneTemplateRoutes);
 
-
 // Routes
 app.use('/zones', zoneRoutes);
+
+// Swagger route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Start server
 const PORT = process.env.PORT || 3003;
