@@ -25,7 +25,23 @@ try {
   const userRoutes = require('./routes/restaurantUserRoutes');
   app.use('/api/restaurant-users', userRoutes);
   
-  const setupSwagger = require('./src/config/swagger'); // Ajustá el path si cambia
+  const attributeRoutes = require('./routes/attribute/attributeRoutes');
+  app.use('/api/restaurants/attributes', attributeRoutes);
+
+  const attributeValueRoutes = require('./routes/attribute/attributeValueRoutes');
+  app.use('/api/restaurants/attributeValue', attributeValueRoutes);
+
+  const taxRate = require('./routes/configuration/taxRateRoutes');
+  app.use('/api/restaurants/taxRate', taxRate);
+
+  const allergen = require('./routes/configuration/allergenRoutes');
+  app.use('/api/restaurants/allergen', allergen);
+
+  const salesCategoryTemplate = require('./routes/configuration/salesCategoryTemplateRoutes');
+  app.use('/api/restaurants/salesCategoryTemplate', salesCategoryTemplate);
+
+  
+  const setupSwagger = require('./config/swagger'); // Ajustá el path si cambia
   setupSwagger(app);
   //const authenticate = require('./middleware/authenticate-a-borrar');
 
