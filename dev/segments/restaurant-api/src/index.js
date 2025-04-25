@@ -40,6 +40,10 @@ try {
   const salesCategoryTemplate = require('./routes/configuration/salesCategoryTemplateRoutes');
   app.use('/api/restaurants/salesCategoryTemplate', salesCategoryTemplate);
 
+  const menuTagTemplate = require('./routes/configuration/menuTagTemplateRoutes');
+  app.use('/api/restaurants/menuTagTemplate', menuTagTemplate);
+
+  
   
   const setupSwagger = require('./config/swagger'); // Ajustá el path si cambia
   setupSwagger(app);

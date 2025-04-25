@@ -14,9 +14,9 @@ router.patch('/:id', verifyRestaurantToken, salesCategoryTemplateController.upda
 router.get('/:id', verifyRestaurantToken, salesCategoryTemplateController.getSalesCategoryById);
 
 // POST - Obtener todas las categorías de ventas por filtros
-router.post('/search', verifyRestaurantToken, salesCategoryTemplateController.getSalesCategories);
+router.post('/get', verifyRestaurantToken, salesCategoryTemplateController.getSalesCategories);
 
 // PATCH - Soft delete de categoría de ventas
-router.patch('/deactivate/:id', verifyRestaurantToken, salesCategoryTemplateController.deleteSalesCategory);
+router.delete('/:id', verifyRestaurantToken, salesCategoryTemplateController.deleteSalesCategory);
 
 module.exports = router;
