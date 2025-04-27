@@ -25,7 +25,38 @@ try {
   const userRoutes = require('./routes/restaurantUserRoutes');
   app.use('/api/restaurant-users', userRoutes);
   
-  const setupSwagger = require('./src/config/swagger'); // Ajustá el path si cambia
+  const attributeRoutes = require('./routes/attribute/attributeRoutes');
+  app.use('/api/restaurants/attributes', attributeRoutes);
+
+  const attributeValueRoutes = require('./routes/attribute/attributeValueRoutes');
+  app.use('/api/restaurants/attributeValue', attributeValueRoutes);
+
+  const taxRate = require('./routes/configuration/taxRateRoutes');
+  app.use('/api/restaurants/taxRate', taxRate);
+
+  const allergen = require('./routes/configuration/allergenRoutes');
+  app.use('/api/restaurants/allergen', allergen);
+
+  const salesCategoryTemplate = require('./routes/configuration/salesCategoryTemplateRoutes');
+  app.use('/api/restaurants/salesCategoryTemplate', salesCategoryTemplate);
+
+  const menuTagTemplate = require('./routes/configuration/menuTagTemplateRoutes');
+  app.use('/api/restaurants/menuTagTemplate', menuTagTemplate);
+
+  const modifierOptionTemplate = require('./routes/configuration/modifierOptionTemplateRoutes');
+  app.use('/api/restaurants/modifierOptionTemplate', modifierOptionTemplate);
+
+  const modifierGroupTemplate = require('./routes/configuration/modifierGroupTemplateRoutes');
+  app.use('/api/restaurants/modifierGroupTemplate', modifierGroupTemplate);
+
+  const portionTemplate = require('./routes/configuration/portionTemplateRoutes');
+  app.use('/api/restaurants/portionTemplate', portionTemplate);
+
+  
+
+  
+
+  const setupSwagger = require('./config/swagger'); // Ajustá el path si cambia
   setupSwagger(app);
   //const authenticate = require('./middleware/authenticate-a-borrar');
 
