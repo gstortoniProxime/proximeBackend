@@ -17,7 +17,7 @@ services:
     image: mongo:6
     container_name: zones-mongo
     ports:
-      - "27018:27017"
+      - "27019:27017"
     volumes:
       - zones_mongo_data:/data/db
 
