@@ -15,7 +15,18 @@ exports.create = async (req, res) => {
       businessId: authBusinessId
     });
 
+    const duplicate = await MenuTagTemplate.findOne({
+        businessId: authBusinessId,
+        value
+      });
+      
+      if (duplicate) {
+        return res.status(400).json({ error: 'Another Menu Tag Template with this value already exists' });
+      }
+
     await newTag.save();
+
+
 
     // Limpiamos para no retornar el businessId
     const { businessId, ...cleaned } = newTag.toObject();

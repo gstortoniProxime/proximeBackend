@@ -15,6 +15,15 @@ exports.createSalesCategory = async (req, res) => {
       colorHex,
       isDefault: isDefault || false
     });
+       const duplicate = await SalesCategoryTemplate.findOne({
+            businessId: authBusinessId,
+            value
+          });
+          
+          if (duplicate) {
+            return res.status(400).json({ error: 'Another Sales Categorie with this value already exists' });
+          }
+    
 
     await newCategory.save();
 

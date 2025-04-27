@@ -14,6 +14,15 @@ exports.createAllergen = async (req, res) => {
       businessId: authBusinessId
     });
 
+       const duplicate = await AllergenRegistry.findOne({
+            businessId: authBusinessId,
+            value
+          });
+          
+          if (duplicate) {
+            return res.status(400).json({ error: 'Another Allergen with this value already exists' });
+          }
+
     await newAllergen.save();
 
     const { businessId, __v, ...cleaned } = newAllergen.toObject();

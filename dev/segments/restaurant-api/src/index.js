@@ -52,6 +52,13 @@ try {
   const portionTemplate = require('./routes/configuration/portionTemplateRoutes');
   app.use('/api/restaurants/portionTemplate', portionTemplate);
 
+  const menuTemplate = require('./routes/menuTemplates/menuTemplateRoutes');
+  app.use('/api/restaurants/menuTemplate', menuTemplate);
+
+  const menuTypeTemplate = require('./routes/menuTemplates/menuTypeTemplateRoutes');
+  app.use('/api/restaurants/menuTypeTemplate', menuTypeTemplate);
+  
+
   
 
   
