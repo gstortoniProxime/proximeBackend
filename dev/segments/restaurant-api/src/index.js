@@ -43,8 +43,19 @@ try {
   const menuTagTemplate = require('./routes/configuration/menuTagTemplateRoutes');
   app.use('/api/restaurants/menuTagTemplate', menuTagTemplate);
 
+  const modifierOptionTemplate = require('./routes/configuration/modifierOptionTemplateRoutes');
+  app.use('/api/restaurants/modifierOptionTemplate', modifierOptionTemplate);
+
+  const modifierGroupTemplate = require('./routes/configuration/modifierGroupTemplateRoutes');
+  app.use('/api/restaurants/modifierGroupTemplate', modifierGroupTemplate);
+
+  const portionTemplate = require('./routes/configuration/portionTemplateRoutes');
+  app.use('/api/restaurants/portionTemplate', portionTemplate);
+
   
+
   
+
   const setupSwagger = require('./config/swagger'); // Ajustá el path si cambia
   setupSwagger(app);
   //const authenticate = require('./middleware/authenticate-a-borrar');
