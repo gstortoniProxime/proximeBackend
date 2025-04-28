@@ -1,13 +1,15 @@
 const ModifierGroupTemplate = require('../../models/ModifierGroupTemplate');
+const ModifierTemplate = require('../../models/ModifierOptionTemplate'); // <-- IMPORTANTE: para validar Modifiers
+
 const utils = require('../../utils/utils');
 
 // POST - Crear un nuevo grupo de modificadores
 exports.create = async (req, res) => {
   try {
     const authBusinessId = req.authUser.businessId;
-    const { value } = req.body;
+    const { value, modifiers = [] } = req.body;
 
-    // Validación previa: ¿ya existe el mismo "value" para este negocio?
+    // Validar duplicados de grupo
     const existingGroup = await ModifierGroupTemplate.findOne({
       businessId: authBusinessId,
       value: value.trim().toLowerCase()
@@ -17,6 +19,16 @@ exports.create = async (req, res) => {
       return res.status(400).json({
         error: `Modifier group "${value}" already exists for your business`
       });
+    }
+
+    // Validar que todos los modifiers existan
+    if (modifiers.length > 0) {
+      const foundModifiers = await ModifierTemplate.find({ _id: { $in: modifiers } }).select('_id');
+      if (foundModifiers.length !== modifiers.length) {
+        return res.status(400).json({
+          error: 'One or more modifier IDs do not exist'
+        });
+      }
     }
 
     const newGroup = new ModifierGroupTemplate({
@@ -41,6 +53,7 @@ exports.update = async (req, res) => {
   try {
     const { id } = req.params;
     const authBusinessId = req.authUser.businessId;
+    const { value, modifiers } = req.body;
 
     const existingGroup = await ModifierGroupTemplate.findOne({
       _id: id,
@@ -51,30 +64,44 @@ exports.update = async (req, res) => {
       return res.status(404).json({ error: 'Modifier group not found for your business' });
     }
 
-    const allowedFields = [
-      'value', 'i18n', 'minSelections', 'maxSelections', 
-      'isRequired', 'enablePortions', 'modifiers', 'isActive'
-    ];
-
-    // Si el usuario intenta cambiar el "value", validamos duplicados
-    if (req.body.value && req.body.value.trim().toLowerCase() !== existingGroup.value) {
+    // Validar cambio de "value"
+    if (value && value.trim().toLowerCase() !== existingGroup.value) {
       const duplicate = await ModifierGroupTemplate.findOne({
         businessId: authBusinessId,
-        value: req.body.value.trim().toLowerCase(),
+        value: value.trim().toLowerCase(),
         _id: { $ne: id }
       });
 
       if (duplicate) {
         return res.status(400).json({
-          error: `Another modifier group with value "${req.body.value}" already exists`
+          error: `Another modifier group with value "${value}" already exists`
         });
       }
 
-      existingGroup.value = req.body.value.trim().toLowerCase();
+      existingGroup.value = value.trim().toLowerCase();
     }
 
+    // Validar que los nuevos modifiers existan
+    if (modifiers !== undefined) {
+      if (modifiers.length > 0) {
+        const foundModifiers = await ModifierTemplate.find({ _id: { $in: modifiers } }).select('_id');
+        if (foundModifiers.length !== modifiers.length) {
+          return res.status(400).json({
+            error: 'One or more modifier IDs do not exist'
+          });
+        }
+      }
+      existingGroup.modifiers = modifiers;
+    }
+
+    // Actualizar los demás campos
+    const allowedFields = [
+      'i18n', 'minSelections', 'maxSelections', 
+      'isRequired', 'enablePortions', 'isActive'
+    ];
+
     allowedFields.forEach(field => {
-      if (field !== 'value' && req.body[field] !== undefined) {
+      if (req.body[field] !== undefined) {
         existingGroup[field] = req.body[field];
       }
     });

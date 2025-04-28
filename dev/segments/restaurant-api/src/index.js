@@ -58,10 +58,20 @@ try {
   const menuTypeTemplate = require('./routes/menuTemplates/menuTypeTemplateRoutes');
   app.use('/api/restaurants/menuTypeTemplate', menuTypeTemplate);
   
+  const sizeTemplate = require('./routes/configuration/sizeTemplateRoutes');
+  app.use('/api/restaurants/sizeTemplate', sizeTemplate);
 
+  const menuItemTemplate = require('./routes/menuTemplates/menuItemTemplateRoutes');
+  app.use('/api/restaurants/menuItemTemplate', menuItemTemplate);
+
+  const menuGroupTemplate = require('./routes/menuTemplates/menuGroupTemplateRoutes');
+  app.use('/api/restaurants/menuGroupTemplate', menuGroupTemplate);
+
+  const pricingRule = require('./routes/menuTemplates/pricingRuleRoutes');
+  app.use('/api/restaurants/pricingRule', pricingRule);
   
 
-  
+
 
   const setupSwagger = require('./config/swagger'); // Ajustá el path si cambia
   setupSwagger(app);
