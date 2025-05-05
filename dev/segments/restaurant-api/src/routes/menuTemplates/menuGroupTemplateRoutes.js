@@ -3,6 +3,8 @@ const router = express.Router();
 const menuGroupTemplateController = require('../../controllers/menuTemplates/menuGroupTemplateController');
 const verifyRestaurantToken = require('../../middleware/verifyRestaurantUsersToken');
 
+router.get('/subgroups/:parentId', verifyRestaurantToken, menuGroupTemplateController.getSubgroups);
+router.get('/hierarchy', verifyRestaurantToken, menuGroupTemplateController.getHierarchy);
 // POST: Crear nuevo MenuGroupTemplate
 router.post('/', verifyRestaurantToken, menuGroupTemplateController.create);
 
@@ -14,5 +16,9 @@ router.get('/:id', verifyRestaurantToken, menuGroupTemplateController.getById);
 
 // POST: Buscar MenuGroupTemplates
 router.post('/get', verifyRestaurantToken, menuGroupTemplateController.getAll);
+
+
+
+
 
 module.exports = router;
